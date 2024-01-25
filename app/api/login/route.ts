@@ -4,11 +4,17 @@ import { NextRequest, NextResponse } from "next/server"
 export async function POST(request: NextRequest) {
     const requestBody:{username: string} = await request.json()
 
-    const userExists = await prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
         where: {
             name: requestBody.username
         }
     })
 
-    return NextResponse.json(userExists)
+    const success = user != null
+    
+    let error = ''
+
+    if(!success) error = "Username not recognized"
+
+    return NextResponse.json({user, success, error})
 }
