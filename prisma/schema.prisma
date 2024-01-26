@@ -7,7 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Study {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  code     String
+  nickname String
+  queries  Int
+  sponsor  String
+  status   String
+  subjects Int
+}
+
 model User {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  studies String[]
 }
