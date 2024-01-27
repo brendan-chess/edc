@@ -8,13 +8,20 @@ datasource db {
 }
 
 model Study {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
   nickname String
   protocol String
   queries  Int
   sponsor  String
   status   String
-  subjects Int
+  subjects String[]
+}
+
+model Subject {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  number String
+  status String
+  study  String @db.ObjectId
 }
 
 model User {

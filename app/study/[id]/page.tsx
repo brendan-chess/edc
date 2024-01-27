@@ -1,4 +1,5 @@
 import { Study } from "@prisma/client";
+import Link from "next/link";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const res = await fetch("http://localhost:3000/api/study", {
@@ -16,7 +17,9 @@ export default async function Page({ params }: { params: { id: string } }) {
         {study.sponsor} {study.protocol}
       </div>
       <div>{study.status}</div>
-      <div>{study.subjects} subject</div>
+      <Link href={`/study/${study.id}/subjects`}>
+        {study.subjects.length} subjects
+      </Link>
       <div>{study.queries} queries</div>
     </div>
   );

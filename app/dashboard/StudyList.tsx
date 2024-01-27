@@ -31,7 +31,7 @@ function Study({ study }: { study: Study }) {
         {study.sponsor} {study.protocol}
       </div>
       <div>{study.status}</div>
-      <div>{study.subjects} subject</div>
+      <div>{study.subjects.length} subjects</div>
       <div>{study.queries} queries</div>
     </div>
   );
