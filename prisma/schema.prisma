@@ -9,8 +9,8 @@ datasource db {
 
 model Study {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  code     String
   nickname String
+  protocol String
   queries  Int
   sponsor  String
   status   String
