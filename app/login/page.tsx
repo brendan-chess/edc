@@ -1,22 +1,28 @@
 "use client"
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-async function handleLogin(username: string) {
-  const res = await fetch('/api/login', {
-    method: 'POST',
-    body: JSON.stringify({ username })
-  })
-  const userExists = await res.json()
-  console.log(userExists)
-}
-
 export default function Page() {
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
+  async function handleLogin() {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ username })
+    })
 
+    const {user, success, error} = await res.json()
+
+    if(!success) {
+      setError(error)
+    } else {
+      router.push('/dashboard')
+    }
+  }
 
   return (
     <div className="flex flex-col gap-4 items-center">
@@ -28,7 +34,7 @@ export default function Page() {
         <input
           type="text"
           onChange={(event) => setUsername(event.target.value)}
-          className="bg-slate-700 rounded-lg shadow px-2 py-1"
+          className="bg-slate-950 border-2 border-slate-700 text-slate-200 rounded shadow px-2 py-1"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -36,15 +42,18 @@ export default function Page() {
         <input
           type="password"
           onChange={(event) => setPassword(event.target.value)}
-          className="bg-slate-700 rounded-lg shadow px-2 py-1"
+          className="bg-slate-950 border-2 border-slate-700 text-slate-200 rounded shadow px-2 py-1"
         />
       </div>
       <button
-        className="bg-slate-700 text-slate-200 px-4 py-2 w-fit rounded-lg font-bold shadow mt-4"
-        onClick={() => handleLogin(username)}
+        className="bg-slate-700 text-slate-200 text-sm px-4 py-2 w-fit rounded font-semibold shadow mt-4"
+        onClick={handleLogin}
       >
         Submit
       </button>
+      {error && (
+        <div className="text-red-700">{error}</div>
+      )}
     </div>
   );
 }
