@@ -7,6 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Case {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  folders String[]
+  study   String   @db.ObjectId
+  subject String   @db.ObjectId
+}
+
+model Folder {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  case    String @db.ObjectId
+  name    String
+  study   String @db.ObjectId
+  subject String @db.ObjectId
+}
+
 model Study {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   nickname String

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "EDC Demo",
@@ -14,8 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="p-2 bg-slate-900 text-slate-200">
-        <div className="bg-slate-800 text-slate-200 p-2 mb-2 text-right rounded">
-          username
+        <div className="bg-slate-800 p-2 mb-2 rounded">
+          <Link href="/dashboard">Dashboard</Link>
         </div>
         {children}
       </body>

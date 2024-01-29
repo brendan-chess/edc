@@ -2,13 +2,13 @@ import prisma from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const req: { studyId: string } = await request.json();
+  const req: { subjectId: string } = await request.json();
 
-  const studyData = await prisma.study.findUnique({
+  const subject = await prisma.subject.findUnique({
     where: {
-      id: req.studyId,
+      id: req.subjectId,
     },
   });
 
-  return NextResponse.json(studyData);
+  return NextResponse.json(subject);
 }

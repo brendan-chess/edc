@@ -14,7 +14,7 @@ export default async function StudyList() {
     <div className="flex flex-col gap-8">
       <div>My Studies</div>
       {studiesData.map((study: Study) => (
-        <Study study={study} />
+        <Study study={study} key={study.id} />
       ))}
       <div>All studies</div>
     </div>
@@ -24,7 +24,7 @@ export default async function StudyList() {
 function Study({ study }: { study: Study }) {
   return (
     <div>
-      <Link href={`/study/${study.id}`} className="underline">
+      <Link href={`/studies/${study.id}`} className="underline">
         {study.nickname}
       </Link>
       <div>
