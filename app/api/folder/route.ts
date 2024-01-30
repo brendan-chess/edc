@@ -3,8 +3,8 @@ import { Folder } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const body: { subjectId: string; selection: string } = await request.json();
-  const { subjectId, selection } = body;
+  const body: { subjectId: string } = await request.json();
+  const { subjectId } = body;
 
   const folders: Folder[] | null = await prisma.folder.findMany({
     where: {

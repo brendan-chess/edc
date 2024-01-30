@@ -1,38 +1,16 @@
-import { Folder, Study, Subject } from "@prisma/client";
+import { Folder } from "@prisma/client";
+import { getSubjectById } from "@/app/utils/subject";
+import { getStudyById } from "@/app/utils/study";
+import { getFoldersBySubjectId } from "@/app/utils/folder";
 
 export default async function Page({
   params,
 }: {
   params: { studyId: string; subjectId: string };
 }) {
-  const subjectData = await fetch("http://localhost:3000/api/subject", {
-    method: "POST",
-    body: JSON.stringify({
-      subjectId: params.subjectId,
-    }),
-  });
-
-  const subject: Subject = await subjectData.json();
-
-  const studyData = await fetch("http://localhost:3000/api/study", {
-    method: "POST",
-    body: JSON.stringify({
-      studyId: params.studyId,
-    }),
-  });
-
-  const study: Study = await studyData.json();
-
-  const res = await fetch("http://localhost:3000/api/folder", {
-    method: "POST",
-    body: JSON.stringify({
-      subjectId: params.subjectId,
-      selection: "all",
-    }),
-    next: { revalidate: 0 },
-  });
-
-  const folders = await res.json();
+  const subject = await getSubjectById(params.subjectId);
+  const study = await getStudyById(params.studyId);
+  const folders = await getFoldersBySubjectId(params.subjectId);
 
   return (
     <div className="flex flex-col gap-4">
@@ -43,7 +21,11 @@ export default async function Page({
       <div>{subject.number}</div>
       <div>{subject.status}</div>
       {folders.map((folder: Folder) => {
-        return <div key={folder.id}>{folder.name}</div>;
+        return (
+          <div key={folder.id} className="underline cursor-pointer">
+            {folder.name}
+          </div>
+        );
       })}
     </div>
   );
