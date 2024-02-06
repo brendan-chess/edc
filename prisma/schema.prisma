@@ -15,8 +15,18 @@ model Case {
 }
 
 model Folder {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  case    String   @db.ObjectId
+  forms   String[]
+  name    String
+  study   String   @db.ObjectId
+  subject String   @db.ObjectId
+}
+
+model Form {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   case    String @db.ObjectId
+  folder  String @db.ObjectId
   name    String
   study   String @db.ObjectId
   subject String @db.ObjectId

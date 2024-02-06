@@ -2,6 +2,7 @@ import { Folder } from "@prisma/client";
 import { getSubjectById } from "@/app/utils/subject";
 import { getStudyById } from "@/app/utils/study";
 import { getFoldersBySubjectId } from "@/app/utils/folder";
+import FolderLink from "@/app/components/FolderLink";
 
 export default async function Page({
   params,
@@ -21,11 +22,7 @@ export default async function Page({
       <div>{subject.number}</div>
       <div>{subject.status}</div>
       {folders.map((folder: Folder) => {
-        return (
-          <div key={folder.id} className="underline cursor-pointer">
-            {folder.name}
-          </div>
-        );
+        return <FolderLink key={folder.id} id={folder.id} name={folder.name} />;
       })}
     </div>
   );
