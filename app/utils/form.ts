@@ -1,10 +1,17 @@
-export async function getFormNamesByFolderId(folderId: string) {
+export type FormName = {
+  id: string;
+  name: string;
+};
+
+export async function getFormNamesByFolderId(
+  folderId: string
+): Promise<FormName[]> {
   const formsData = await fetch("http://localhost:3000/api/form", {
     method: "POST",
     body: JSON.stringify({ folderId }),
   });
 
-  const forms: { id: string; name: string }[] = await formsData.json();
+  const formNames: FormName[] = await formsData.json();
 
-  return forms;
+  return formNames;
 }

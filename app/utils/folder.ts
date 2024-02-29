@@ -1,6 +1,8 @@
 import { Folder } from "@prisma/client";
 
-export async function getFoldersBySubjectId(subjectId: string) {
+export async function getFoldersBySubjectId(
+  subjectId: string
+): Promise<Folder[]> {
   const foldersData = await fetch("http://localhost:3000/api/folder", {
     method: "POST",
     body: JSON.stringify({ subjectId }),

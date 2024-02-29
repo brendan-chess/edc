@@ -1,4 +1,4 @@
-import { Folder } from "@prisma/client";
+import { Folder, Study, Subject } from "@prisma/client";
 import { getSubjectById } from "@/app/utils/subject";
 import { getStudyById } from "@/app/utils/study";
 import { getFoldersBySubjectId } from "@/app/utils/folder";
@@ -9,9 +9,9 @@ export default async function Page({
 }: {
   params: { studyId: string; subjectId: string };
 }) {
-  const subject = await getSubjectById(params.subjectId);
-  const study = await getStudyById(params.studyId);
-  const folders = await getFoldersBySubjectId(params.subjectId);
+  const subject: Subject = await getSubjectById(params.subjectId);
+  const study: Study = await getStudyById(params.studyId);
+  const folders: Folder[] = await getFoldersBySubjectId(params.subjectId);
 
   return (
     <div className="flex flex-col gap-4">

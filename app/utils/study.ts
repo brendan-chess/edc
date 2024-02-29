@@ -1,6 +1,6 @@
 import { Study } from "@prisma/client";
 
-export async function getStudyById(studyId: string) {
+export async function getStudyById(studyId: string): Promise<Study> {
   const studyData = await fetch("http://localhost:3000/api/study", {
     method: "POST",
     body: JSON.stringify({

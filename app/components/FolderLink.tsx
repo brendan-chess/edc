@@ -1,6 +1,6 @@
 "use client";
 
-import { getFormNamesByFolderId } from "@/app/utils/form";
+import { FormName, getFormNamesByFolderId } from "@/app/utils/form";
 import { useState } from "react";
 import FormLink from "./FormLink";
 
@@ -10,12 +10,12 @@ type FolderLinkProps = {
 };
 
 export default function FolderLink(props: FolderLinkProps) {
-  const [forms, setForms] = useState<{ id: string; name: string }[]>([]);
+  const [formNames, setFormNames] = useState<FormName[]>([]);
 
   async function handleClick(id: string) {
-    const formData = await getFormNamesByFolderId(id);
+    const formNamesData = await getFormNamesByFolderId(id);
 
-    setForms(formData);
+    setFormNames(formNamesData);
   }
 
   return (
@@ -26,8 +26,8 @@ export default function FolderLink(props: FolderLinkProps) {
       >
         {props.name}
       </div>
-      {forms.map((form) => {
-        return <FormLink key={form.id} {...form} />;
+      {formNames.map((formName: FormName) => {
+        return <FormLink key={formName.id} {...formName} />;
       })}
     </div>
   );
