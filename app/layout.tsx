@@ -14,12 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="p-2 bg-slate-900 text-slate-200">
-        <div className="bg-slate-800 p-2 mb-2 rounded">
-          <Link href="/dashboard">Dashboard</Link>
-        </div>
-        {children}
-      </body>
+      <body className="p-8 bg-neutral-900 text-neutral-200">{children}</body>
     </html>
   );
 }
