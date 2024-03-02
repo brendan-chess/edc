@@ -8,7 +8,7 @@ export default async function StudyList() {
   return (
     <div className="p-4 bg-neutral-800 rounded-md w-min">
       <div className="text-2xl font-bold mb-4">Studies</div>
-      <div className="flex flex-col gap-4">
+      <div className="flex gap-4">
         {studies.map((study: Study) => {
           return <StudyListItem key={study.id} {...study} />;
         })}
