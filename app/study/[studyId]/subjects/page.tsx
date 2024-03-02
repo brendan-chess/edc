@@ -1,4 +1,5 @@
-import { Subject as SubjectType } from "@prisma/client";
+import { getStudyPartial, getSubjects } from "@/app/actions/study";
+import { Study, Subject } from "@prisma/client";
 import Link from "next/link";
 
 export default async function Page({
@@ -6,29 +7,23 @@ export default async function Page({
 }: {
   params: { studyId: string };
 }) {
-  const res = await fetch(`http://localhost:3000/api/study/subjects`, {
-    method: "POST",
-    body: JSON.stringify({ studyId: params.studyId }),
-    next: { revalidate: 0 },
-  });
-
-  const subjects: SubjectType[] = await res.json();
+  const subjects: Subject[] = await getSubjects(params.studyId);
 
   return (
-    <div className="flex flex-col gap-4">
-      {subjects.map((subject: SubjectType) => {
+    <div className=" grid grid-cols-2 gap-4">
+      {subjects.map((subject: Subject) => {
         return <Subject subject={subject} key={subject.id} />;
       })}
     </div>
   );
 }
 
-function Subject({ subject }: { subject: SubjectType }) {
+function Subject({ subject }: { subject: Subject }) {
   return (
-    <div>
+    <div className="flex items-center gap-4 bg-neutral-800 p-4 rounded-md cursor-pointer">
       <Link
-        href={`/studies/${subject.study}/subjects/${subject.id}`}
-        className="underline cursor-pointer"
+        href={`/study/${subject.study}/subject/${subject.id}`}
+        className="text-lg font-semibold cursor-pointer"
       >
         {subject.number}
       </Link>
