@@ -1,4 +1,4 @@
-import { getStudyPartial, getSubjects } from "@/app/actions/study";
+import { getSubjects } from "@/app/actions/subject";
 import { Study, Subject } from "@prisma/client";
 import Link from "next/link";
 

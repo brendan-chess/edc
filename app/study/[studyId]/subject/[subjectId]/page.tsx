@@ -1,28 +1,25 @@
-import { Folder, Study, Subject } from "@prisma/client";
-import { getSubjectById } from "@/app/utils/subject";
-import { getStudyById } from "@/app/utils/study";
-import { getFoldersBySubjectId } from "@/app/utils/folder";
+import { Folder, Subject } from "@prisma/client";
 import FolderLink from "@/app/components/FolderLink";
+import { getSubject } from "@/app/actions/subject";
+import { getFolders } from "@/app/actions/folder";
+import FolderMenu from "@/app/components/FolderMenu";
 
 export default async function Page({
   params,
 }: {
   params: { studyId: string; subjectId: string };
 }) {
-  const subject: Subject = await getSubjectById(params.subjectId);
-  const study: Study = await getStudyById(params.studyId);
-  const folders: Folder[] = await getFoldersBySubjectId(params.subjectId);
+  const subject: Subject | null = await getSubject(params.subjectId);
+  if (subject === null) return;
+
+  const folders: Folder[] = await getFolders(params.subjectId); // could convert to getFoldersPartial
 
   return (
     <div className="flex flex-col gap-4">
-      <div>{study.nickname}</div>
-      <div>
-        {study.sponsor} {study.protocol}
-      </div>
-      <div>{subject.number}</div>
-      <div>{subject.status}</div>
+      <div className="text-lg font-semibold">{subject.number}</div>
       {folders.map((folder: Folder) => {
-        return <FolderLink key={folder.id} id={folder.id} name={folder.name} />;
+        return <FolderMenu key={folder.id} {...folder} />;
+        // return <FolderLink key={folder.id} id={folder.id} name={folder.name} />;
       })}
     </div>
   );

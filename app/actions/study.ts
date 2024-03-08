@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/prisma/prisma";
-import { Study, Subject } from "@prisma/client";
+import { Study } from "@prisma/client";
 
 export async function getStudy(studyId: string): Promise<Study | null> {
   let study: Study | null = null;
@@ -29,20 +29,4 @@ export async function getStudyPartial(
   });
 
   return study;
-}
-
-export async function getSubjects(studyId: string): Promise<Subject[]> {
-  let subjects: Subject[] = [];
-
-  const study = await getStudyPartial(studyId, { subjects: true });
-
-  if (study === null) return subjects; // also check if there are subjects
-
-  subjects = await prisma.subject.findMany({
-    where: {
-      id: { in: study.subjects },
-    },
-  });
-
-  return subjects;
 }
