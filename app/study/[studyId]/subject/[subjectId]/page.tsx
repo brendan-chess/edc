@@ -1,7 +1,6 @@
 import { Folder, Subject } from "@prisma/client";
-import FolderLink from "@/app/components/FolderLink";
 import { getSubject } from "@/app/actions/subject";
-import { getFolders } from "@/app/actions/folder";
+import { getFoldersPartial } from "@/app/actions/folder";
 import FolderMenu from "@/app/components/FolderMenu";
 
 export default async function Page({
@@ -12,14 +11,17 @@ export default async function Page({
   const subject: Subject | null = await getSubject(params.subjectId);
   if (subject === null) return;
 
-  const folders: Folder[] = await getFolders(params.subjectId); // could convert to getFoldersPartial
+  const folders: Partial<Folder>[] = await getFoldersPartial(params.subjectId, {
+    id: true,
+    name: true,
+    forms: true,
+  });
 
   return (
     <div className="flex flex-col gap-4">
       <div className="text-lg font-semibold">{subject.number}</div>
-      {folders.map((folder: Folder) => {
+      {folders.map((folder: Partial<Folder>) => {
         return <FolderMenu key={folder.id} {...folder} />;
-        // return <FolderLink key={folder.id} id={folder.id} name={folder.name} />;
       })}
     </div>
   );

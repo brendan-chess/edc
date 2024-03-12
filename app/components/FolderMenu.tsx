@@ -4,12 +4,12 @@ import { Folder, Form } from "@prisma/client";
 import { useState } from "react";
 import { getFormsPartial } from "../actions/form";
 
-export default function FolderMenu({ name, forms }: Folder) {
+export default function FolderMenu({ name, forms }: Partial<Folder>) {
   const [expanded, setExpanded] = useState(false);
   const [formMenu, setFormMenu] = useState<Partial<Form>[]>([]);
 
   async function onClick() {
-    if (formMenu.length === 0) {
+    if (formMenu.length === 0 && forms) {
       const formObjects = await getFormsPartial(forms, { name: true });
       setFormMenu(formObjects);
     }
